@@ -17,6 +17,8 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
+/xcuserdata/jack.xcuserdatad/UserInterfaceState.xcuserstate
+
 ## Other
 *.moved-aside
 *.xccheckout
