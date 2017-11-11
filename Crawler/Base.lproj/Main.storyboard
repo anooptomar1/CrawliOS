@@ -1,24 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Heebo-Bold.ttf">
+            <string>Heebo-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Crawls View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CrawlsViewController" customModule="Crawler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y3Y-hk-XcP">
+                                <rect key="frame" x="0.0" y="92" width="375" height="575"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xmk-lp-KHM">
+                                <rect key="frame" x="0.0" y="20" width="375" height="52"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Crawls" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ES4-NY-Jlt">
+                                        <rect key="frame" x="16" y="12" width="61.5" height="29.5"/>
+                                        <fontDescription key="fontDescription" name="Heebo-Bold" family="Heebo" pointSize="20"/>
+                                        <color key="textColor" red="0.96078431372549022" green="0.96070295569999997" blue="0.96470814940000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.2174970806" green="0.27393701669999998" blue="0.30981582400000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="ES4-NY-Jlt" firstAttribute="centerY" secondItem="Xmk-lp-KHM" secondAttribute="centerY" id="l1a-b2-L2f"/>
+                                    <constraint firstItem="ES4-NY-Jlt" firstAttribute="leading" secondItem="Xmk-lp-KHM" secondAttribute="leading" constant="16" id="uDh-wf-hyw"/>
+                                    <constraint firstAttribute="height" constant="52" id="wYr-rZ-aW6"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DOL-U2-hQm">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
+                                <color key="backgroundColor" red="0.2174970806" green="0.27393701669999998" blue="0.30981582400000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gb-ib-FHj">
+                                <rect key="frame" x="285" y="577" width="78" height="78"/>
+                                <state key="normal" image="AddButton"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.88242268560000003" green="0.88631087539999998" blue="0.88235342500000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="DOL-U2-hQm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="13i-B3-Mom"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Y3Y-hk-XcP" secondAttribute="trailing" id="3I1-Z5-RRO"/>
+                            <constraint firstItem="Xmk-lp-KHM" firstAttribute="top" secondItem="DOL-U2-hQm" secondAttribute="bottom" id="7Nq-ep-a2J"/>
+                            <constraint firstItem="Xmk-lp-KHM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7f0-qc-QWI"/>
+                            <constraint firstItem="Xmk-lp-KHM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GY2-RR-xKJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0gb-ib-FHj" secondAttribute="bottom" constant="12" id="Har-bY-VcT"/>
+                            <constraint firstAttribute="trailing" secondItem="DOL-U2-hQm" secondAttribute="trailing" id="IZQ-PK-uzA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Y3Y-hk-XcP" secondAttribute="bottom" id="ORi-i2-pao"/>
+                            <constraint firstItem="Y3Y-hk-XcP" firstAttribute="top" secondItem="Xmk-lp-KHM" secondAttribute="bottom" constant="20" id="e5h-qL-vNg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0gb-ib-FHj" secondAttribute="trailing" constant="12" id="mC4-4P-i13"/>
+                            <constraint firstItem="DOL-U2-hQm" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ra6-wP-cqh"/>
+                            <constraint firstItem="Y3Y-hk-XcP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="w1x-5M-oHD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Xmk-lp-KHM" secondAttribute="trailing" id="xw8-0P-ceh"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="headerView" destination="Xmk-lp-KHM" id="0q4-HN-0TP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="AddButton" width="78" height="78"/>
+    </resources>
 </document>
