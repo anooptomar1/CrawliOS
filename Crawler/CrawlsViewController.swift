@@ -15,6 +15,7 @@ class CrawlsViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let polyline = Polyline(encodedPolyline: "qkqtFbn_Vui`Xu`l]")
         // Do any additional setup after loading the view, typically from a nib.
     }
 
