@@ -27,6 +27,7 @@
 		04ECAD8E1FB753DC0039001F /* Heebo-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 049DA59E1FB7390E005FD8EA /* Heebo-ExtraBold.ttf */; };
 		04ECAD8F1FB753DC0039001F /* Heebo-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 049DA59F1FB7390E005FD8EA /* Heebo-Light.ttf */; };
 		04ECAD911FB755600039001F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD901FB755600039001F /* Colors.swift */; };
+		04ECAD941FB75DDD0039001F /* CrawlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */; };
 		BE322D6E6968577E5D9DFD00 /* Pods_CrawlerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DCCB18C5C16E0E24E2C37B /* Pods_CrawlerTests.framework */; };
 		DC76A6B66C2FE536028680BC /* Pods_Crawler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 100AA317B41709C19911058B /* Pods_Crawler.framework */; };
 /* End PBXBuildFile section */
@@ -67,6 +68,7 @@
 		049DA59F1FB7390E005FD8EA /* Heebo-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-Light.ttf"; sourceTree = "<group>"; };
 		04ECAD871FB752230039001F /* Polyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
 		04ECAD901FB755600039001F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlTableViewCell.swift; sourceTree = "<group>"; };
 		100AA317B41709C19911058B /* Pods_Crawler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crawler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		268616F817DEF5DDD7C77931 /* Pods-Crawler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.release.xcconfig"; sourceTree = "<group>"; };
 		AF81287C547C7B24C229EF9B /* Pods-Crawler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				0418C08A1FB7433E00221DE2 /* CoreData */,
 				049DA5751FB72BC9005FD8EA /* AppDelegate.swift */,
 				049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */,
+				04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */,
 				04ECAD871FB752230039001F /* Polyline.swift */,
 				049DA5791FB72BC9005FD8EA /* Main.storyboard */,
 				049DA5981FB7390E005FD8EA /* Heebo */,
@@ -412,6 +415,7 @@
 				04ECAD881FB752230039001F /* Polyline.swift in Sources */,
 				049DA57E1FB72BC9005FD8EA /* Crawler.xcdatamodeld in Sources */,
 				0418C0881FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift in Sources */,
+				04ECAD941FB75DDD0039001F /* CrawlTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
