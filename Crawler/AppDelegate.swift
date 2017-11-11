@@ -21,9 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dest = self.window!.rootViewController as! CrawlsViewController
         dest.managedObjectContext = self.managedObjectContext
         
+        GMSServices.provideAPIKey("AIzaSyAlecdJCO2kjIg48qjXL0NZ4SOztf1idLs")
+        
         GoogleMapsWrapper.GetPubs(myLocation: CLLocation(latitude: 51.5033640, longitude: -0.1276250), maxCount: 20) { (pubs) in
             // DO CALCULATING ROUTE SHIT
-            <#code#>
+            
         }
         
         // Override point for customization after application launch.
