@@ -46,7 +46,7 @@ class GoogleMapsWrapper {
                 // Strip out the relavant bits
                 var results:[PubObject] = []
                 for result in json["results"].array! {
-                    let location = CLLocation(latitude: result["location"]["lat"].double!, longitude: result["latitude"]["lng"].double!)
+                    let location = CLLocation(latitude: result["geometry"]["location"]["lat"].double!, longitude: result["latitude"]["lng"].double!)
                     results.append(PubObject(id:result["id"].string!, name:result["name"].string!, location:location, rating:result["rating"].double!))
                 }
                 DispatchQueue.main.async {
