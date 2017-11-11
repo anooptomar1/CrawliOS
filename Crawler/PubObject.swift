@@ -15,9 +15,9 @@ class PubObject {
     var id:String!
     var name:String!
     var location:CLLocation!
-    var rating:Double!
+    var rating:Double?
     
-    init(id:String, name:String, location:CLLocation, rating:Double) {
+    init(id:String, name:String, location:CLLocation, rating:Double?) {
         self.id = id
         self.name = name
         self.location = location
