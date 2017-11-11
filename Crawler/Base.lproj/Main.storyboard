@@ -12,6 +12,9 @@
         <array key="Heebo-Bold.ttf">
             <string>Heebo-Bold</string>
         </array>
+        <array key="Heebo-Regular.ttf">
+            <string>Heebo-Regular</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Crawls View Controller-->
@@ -22,9 +25,61 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y3Y-hk-XcP">
-                                <rect key="frame" x="0.0" y="92" width="375" height="575"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y3Y-hk-XcP">
+                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="crawlCell" rowHeight="316" id="cON-Sd-4YE" customClass="CrawlTableViewCell" customModule="Crawler" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="316"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cON-Sd-4YE" id="fLG-hQ-RBs">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="316"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4e-aH-u8d">
+                                                    <rect key="frame" x="31" y="31" width="313" height="285"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Dogs Bollocks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbv-fb-JhZ">
+                                                            <rect key="frame" x="18" y="13" width="166" height="29.5"/>
+                                                            <fontDescription key="fontDescription" name="Heebo-Regular" family="Heebo" pointSize="20"/>
+                                                            <color key="textColor" red="0.064893759790000005" green="0.12103790790000001" blue="0.1529510915" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DgN-LH-8IQ">
+                                                            <rect key="frame" x="0.0" y="55.5" width="313" height="229.5"/>
+                                                            <color key="backgroundColor" red="0.43183624739999998" green="0.1161867753" blue="0.31373870370000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.96082431079999997" green="0.96070295569999997" blue="0.96470814940000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="DgN-LH-8IQ" secondAttribute="bottom" id="ABi-S4-m2I"/>
+                                                        <constraint firstItem="qbv-fb-JhZ" firstAttribute="top" secondItem="T4e-aH-u8d" secondAttribute="top" constant="13" id="FIj-Dj-uim"/>
+                                                        <constraint firstItem="DgN-LH-8IQ" firstAttribute="top" secondItem="qbv-fb-JhZ" secondAttribute="bottom" constant="13" id="RP2-d7-r8B"/>
+                                                        <constraint firstItem="qbv-fb-JhZ" firstAttribute="leading" secondItem="T4e-aH-u8d" secondAttribute="leading" constant="18" id="flT-fm-S06"/>
+                                                        <constraint firstAttribute="trailing" secondItem="DgN-LH-8IQ" secondAttribute="trailing" id="tBd-XL-Ten"/>
+                                                        <constraint firstItem="DgN-LH-8IQ" firstAttribute="leading" secondItem="T4e-aH-u8d" secondAttribute="leading" id="zil-MM-6ly"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="T4e-aH-u8d" secondAttribute="bottom" id="ZAh-Vc-S72"/>
+                                                <constraint firstItem="T4e-aH-u8d" firstAttribute="leading" secondItem="fLG-hQ-RBs" secondAttribute="leading" constant="31" id="dN7-uA-5MY"/>
+                                                <constraint firstAttribute="trailing" secondItem="T4e-aH-u8d" secondAttribute="trailing" constant="31" id="nt6-jD-eWC"/>
+                                                <constraint firstItem="T4e-aH-u8d" firstAttribute="top" secondItem="fLG-hQ-RBs" secondAttribute="top" constant="31" id="rzE-kB-8YM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="cellView" destination="T4e-aH-u8d" id="sJh-iL-rFz"/>
+                                            <outlet property="mapHolder" destination="DgN-LH-8IQ" id="nGy-0u-Lny"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="S2n-dP-1pR"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="rvn-5n-YT2"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xmk-lp-KHM">
                                 <rect key="frame" x="0.0" y="20" width="375" height="52"/>
@@ -61,8 +116,8 @@
                             <constraint firstItem="Xmk-lp-KHM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GY2-RR-xKJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0gb-ib-FHj" secondAttribute="bottom" constant="12" id="Har-bY-VcT"/>
                             <constraint firstAttribute="trailing" secondItem="DOL-U2-hQm" secondAttribute="trailing" id="IZQ-PK-uzA"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Y3Y-hk-XcP" secondAttribute="bottom" id="ORi-i2-pao"/>
-                            <constraint firstItem="Y3Y-hk-XcP" firstAttribute="top" secondItem="Xmk-lp-KHM" secondAttribute="bottom" constant="20" id="e5h-qL-vNg"/>
+                            <constraint firstAttribute="bottom" secondItem="Y3Y-hk-XcP" secondAttribute="bottom" id="ORi-i2-pao"/>
+                            <constraint firstItem="Y3Y-hk-XcP" firstAttribute="top" secondItem="Xmk-lp-KHM" secondAttribute="bottom" id="e5h-qL-vNg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0gb-ib-FHj" secondAttribute="trailing" constant="12" id="mC4-4P-i13"/>
                             <constraint firstItem="DOL-U2-hQm" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ra6-wP-cqh"/>
                             <constraint firstItem="Y3Y-hk-XcP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="w1x-5M-oHD"/>
