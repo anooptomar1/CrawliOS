@@ -29,6 +29,10 @@
 		04ECAD911FB755600039001F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD901FB755600039001F /* Colors.swift */; };
 		04ECAD941FB75DDD0039001F /* CrawlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */; };
 		BE322D6E6968577E5D9DFD00 /* Pods_CrawlerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DCCB18C5C16E0E24E2C37B /* Pods_CrawlerTests.framework */; };
+		D035FFE21FB752FB00E32E0D /* GoogleMapsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */; };
+		D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */; };
+		D035FFE61FB7640A00E32E0D /* PubObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE51FB7640A00E32E0D /* PubObject.swift */; };
+		D035FFE81FB7740900E32E0D /* RoutePlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE71FB7740900E32E0D /* RoutePlanner.swift */; };
 		DC76A6B66C2FE536028680BC /* Pods_Crawler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 100AA317B41709C19911058B /* Pods_Crawler.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +76,10 @@
 		100AA317B41709C19911058B /* Pods_Crawler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crawler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		268616F817DEF5DDD7C77931 /* Pods-Crawler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.release.xcconfig"; sourceTree = "<group>"; };
 		AF81287C547C7B24C229EF9B /* Pods-Crawler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.debug.xcconfig"; sourceTree = "<group>"; };
+		D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsWrapper.swift; sourceTree = "<group>"; };
+		D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		D035FFE51FB7640A00E32E0D /* PubObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubObject.swift; sourceTree = "<group>"; };
+		D035FFE71FB7740900E32E0D /* RoutePlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlanner.swift; sourceTree = "<group>"; };
 		EFB798F73C9F487144EFF62A /* Pods-CrawlerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CrawlerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CrawlerTests/Pods-CrawlerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FAF5E0B944D22A2EA22C0BC4 /* Pods-CrawlerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CrawlerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CrawlerTests/Pods-CrawlerTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,7 +141,11 @@
 				04ECAD921FB7556B0039001F /* Extensions */,
 				0418C08A1FB7433E00221DE2 /* CoreData */,
 				049DA5751FB72BC9005FD8EA /* AppDelegate.swift */,
+				D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */,
+				D035FFE51FB7640A00E32E0D /* PubObject.swift */,
 				049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */,
+				D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */,
+				D035FFE71FB7740900E32E0D /* RoutePlanner.swift */,
 				04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */,
 				04ECAD871FB752230039001F /* Polyline.swift */,
 				049DA5791FB72BC9005FD8EA /* Main.storyboard */,
@@ -315,9 +327,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Crawler/Pods-Crawler-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -360,13 +376,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CrawlerTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C0A7CEF4AE826A00142A9CC4 /* [CP] Check Pods Manifest.lock */ = {
@@ -375,13 +394,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Crawler-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C97DD1C045C187B8E9720402 /* [CP] Copy Pods Resources */ = {
@@ -409,11 +431,15 @@
 				0418C0871FB742CA00221DE2 /* Pub+CoreDataProperties.swift in Sources */,
 				04ECAD911FB755600039001F /* Colors.swift in Sources */,
 				049DA5781FB72BC9005FD8EA /* CrawlsViewController.swift in Sources */,
+				D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */,
+				D035FFE61FB7640A00E32E0D /* PubObject.swift in Sources */,
 				0418C0861FB742CA00221DE2 /* Pub+CoreDataClass.swift in Sources */,
+				D035FFE21FB752FB00E32E0D /* GoogleMapsWrapper.swift in Sources */,
 				0418C0891FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift in Sources */,
 				049DA5761FB72BC9005FD8EA /* AppDelegate.swift in Sources */,
 				04ECAD881FB752230039001F /* Polyline.swift in Sources */,
 				049DA57E1FB72BC9005FD8EA /* Crawler.xcdatamodeld in Sources */,
+				D035FFE81FB7740900E32E0D /* RoutePlanner.swift in Sources */,
 				0418C0881FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift in Sources */,
 				04ECAD941FB75DDD0039001F /* CrawlTableViewCell.swift in Sources */,
 			);
