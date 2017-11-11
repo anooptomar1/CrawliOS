@@ -9,6 +9,7 @@ target 'Crawler' do
 
     pod 'GoogleMaps'
     pod 'GooglePlaces'
+    pod 'Polyline', '~> 4.0'
 
   # Pods for Crawler
 
