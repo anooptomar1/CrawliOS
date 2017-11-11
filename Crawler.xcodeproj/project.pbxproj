@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0418C0861FB742CA00221DE2 /* Pub+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C0821FB742CA00221DE2 /* Pub+CoreDataClass.swift */; };
+		0418C0871FB742CA00221DE2 /* Pub+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C0831FB742CA00221DE2 /* Pub+CoreDataProperties.swift */; };
+		0418C0881FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C0841FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift */; };
+		0418C0891FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C0851FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift */; };
 		049DA5761FB72BC9005FD8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049DA5751FB72BC9005FD8EA /* AppDelegate.swift */; };
-		049DA5781FB72BC9005FD8EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049DA5771FB72BC9005FD8EA /* ViewController.swift */; };
+		049DA5781FB72BC9005FD8EA /* CrawlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */; };
 		049DA57B1FB72BC9005FD8EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 049DA5791FB72BC9005FD8EA /* Main.storyboard */; };
 		049DA57E1FB72BC9005FD8EA /* Crawler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 049DA57C1FB72BC9005FD8EA /* Crawler.xcdatamodeld */; };
 		049DA5801FB72BC9005FD8EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 049DA57F1FB72BC9005FD8EA /* Assets.xcassets */; };
@@ -27,9 +31,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0418C0821FB742CA00221DE2 /* Pub+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pub+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0418C0831FB742CA00221DE2 /* Pub+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pub+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0418C0841FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedCrawl+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0418C0851FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedCrawl+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		049DA5721FB72BC9005FD8EA /* Crawler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crawler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049DA5751FB72BC9005FD8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		049DA5771FB72BC9005FD8EA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlsViewController.swift; sourceTree = "<group>"; };
 		049DA57A1FB72BC9005FD8EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		049DA57D1FB72BC9005FD8EA /* Crawler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Crawler.xcdatamodel; sourceTree = "<group>"; };
 		049DA57F1FB72BC9005FD8EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +46,13 @@
 		049DA5891FB72BC9005FD8EA /* CrawlerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrawlerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		049DA58D1FB72BC9005FD8EA /* CrawlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlerTests.swift; sourceTree = "<group>"; };
 		049DA58F1FB72BC9005FD8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		049DA5991FB7390E005FD8EA /* Heebo-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-Thin.ttf"; sourceTree = "<group>"; };
+		049DA59A1FB7390E005FD8EA /* Heebo-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-Medium.ttf"; sourceTree = "<group>"; };
+		049DA59B1FB7390E005FD8EA /* Heebo-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-Black.ttf"; sourceTree = "<group>"; };
+		049DA59C1FB7390E005FD8EA /* Heebo-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-Bold.ttf"; sourceTree = "<group>"; };
+		049DA59D1FB7390E005FD8EA /* Heebo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-Regular.ttf"; sourceTree = "<group>"; };
+		049DA59E1FB7390E005FD8EA /* Heebo-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-ExtraBold.ttf"; sourceTree = "<group>"; };
+		049DA59F1FB7390E005FD8EA /* Heebo-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Heebo-Light.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +73,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0418C08A1FB7433E00221DE2 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				0418C0821FB742CA00221DE2 /* Pub+CoreDataClass.swift */,
+				0418C0831FB742CA00221DE2 /* Pub+CoreDataProperties.swift */,
+				0418C0841FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift */,
+				0418C0851FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		049DA5691FB72BC9005FD8EA = {
 			isa = PBXGroup;
 			children = (
@@ -79,9 +105,11 @@
 		049DA5741FB72BC9005FD8EA /* Crawler */ = {
 			isa = PBXGroup;
 			children = (
+				0418C08A1FB7433E00221DE2 /* CoreData */,
 				049DA5751FB72BC9005FD8EA /* AppDelegate.swift */,
-				049DA5771FB72BC9005FD8EA /* ViewController.swift */,
+				049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */,
 				049DA5791FB72BC9005FD8EA /* Main.storyboard */,
+				049DA5981FB7390E005FD8EA /* Heebo */,
 				049DA57F1FB72BC9005FD8EA /* Assets.xcassets */,
 				049DA5811FB72BC9005FD8EA /* LaunchScreen.storyboard */,
 				049DA5841FB72BC9005FD8EA /* Info.plist */,
@@ -97,6 +125,20 @@
 				049DA58F1FB72BC9005FD8EA /* Info.plist */,
 			);
 			path = CrawlerTests;
+			sourceTree = "<group>";
+		};
+		049DA5981FB7390E005FD8EA /* Heebo */ = {
+			isa = PBXGroup;
+			children = (
+				049DA5991FB7390E005FD8EA /* Heebo-Thin.ttf */,
+				049DA59A1FB7390E005FD8EA /* Heebo-Medium.ttf */,
+				049DA59B1FB7390E005FD8EA /* Heebo-Black.ttf */,
+				049DA59C1FB7390E005FD8EA /* Heebo-Bold.ttf */,
+				049DA59D1FB7390E005FD8EA /* Heebo-Regular.ttf */,
+				049DA59E1FB7390E005FD8EA /* Heebo-ExtraBold.ttf */,
+				049DA59F1FB7390E005FD8EA /* Heebo-Light.ttf */,
+			);
+			path = Heebo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,9 +244,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				049DA5781FB72BC9005FD8EA /* ViewController.swift in Sources */,
+				0418C0871FB742CA00221DE2 /* Pub+CoreDataProperties.swift in Sources */,
+				049DA5781FB72BC9005FD8EA /* CrawlsViewController.swift in Sources */,
+				0418C0861FB742CA00221DE2 /* Pub+CoreDataClass.swift in Sources */,
+				0418C0891FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift in Sources */,
 				049DA5761FB72BC9005FD8EA /* AppDelegate.swift in Sources */,
 				049DA57E1FB72BC9005FD8EA /* Crawler.xcdatamodeld in Sources */,
+				0418C0881FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
