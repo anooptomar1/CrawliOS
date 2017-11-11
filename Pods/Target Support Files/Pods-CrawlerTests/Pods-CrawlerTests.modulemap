@@ -1,6 +1,0 @@
-framework module Pods_CrawlerTests {
-  umbrella header "Pods-CrawlerTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
