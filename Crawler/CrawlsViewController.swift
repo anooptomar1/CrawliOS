@@ -163,10 +163,15 @@ extension CrawlsViewController: UITableViewDelegate, UITableViewDataSource {
         let path = GMSMutablePath()
         path.add(startMarker.position)
         
-        for pub in crawl.pubs! {
-            if let castedPub = pub as? Pub {
+        let allPubs = (crawl.pubs!.allObjects as! [Pub]).sorted { (p1, p2) -> Bool in
+            p1.id < p2.id
+        }
+        
+        for pub in allPubs {
+            
+            print(pub.id)
                 
-                let loc = CLLocationCoordinate2D(latitude: castedPub.lat, longitude: castedPub.long)
+                let loc = CLLocationCoordinate2D(latitude: pub.lat, longitude: pub.long)
                 
                 if loc.latitude < minLat {
                     minLat = loc.latitude
@@ -193,7 +198,7 @@ extension CrawlsViewController: UITableViewDelegate, UITableViewDataSource {
                 markers.append(pubMarker)
                 
                 path.add(loc)
-            }
+            
         }
         
         path.add(endMarker.position)
@@ -222,7 +227,7 @@ extension CrawlsViewController: UITableViewDelegate, UITableViewDataSource {
             marker.map = mapView
         }
         
-        cell.mapHolder.isUserInteractionEnabled = false
+//        cell.mapHolder.isUserInteractionEnabled = false
         
         cell.mapHolder.addSubview(mapView)
         

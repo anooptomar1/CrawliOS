@@ -10,6 +10,8 @@ import UIKit
 import ARKit
 import SceneKit
 
-class ARScene: ARSCNView {
+class ARScene: SCNScene {
+    
+    
 
 }

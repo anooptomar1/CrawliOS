@@ -12,6 +12,8 @@ class CrawlDetailViewController: UIViewController {
 
     var crawl: SavedCrawl!
     
+    var sortedPubs: [Pub]!
+    
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var crawlTitleLabel: UILabel!
     
@@ -30,6 +32,10 @@ class CrawlDetailViewController: UIViewController {
         headerView.layer.shadowOffset = CGSize(width: 0, height: 3)
         headerView.layer.shadowRadius = 10
         headerView.layer.shadowOpacity = 1
+        
+        sortedPubs = (crawl.pubs!.allObjects as! [Pub]).sorted { (p1, p2) -> Bool in
+            p1.id < p2.id
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,7 +69,7 @@ extension CrawlDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return crawl.pubs!.count + 2
+        return sortedPubs.count + 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,7 +79,7 @@ extension CrawlDetailViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         }
         
-        let pub = crawl.pubs!.allObjects[indexPath.row - 1] as! Pub
+        let pub = sortedPubs[indexPath.row - 1] as! Pub
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "pubCell", for: indexPath) as! CrawlDetailTableViewCell
         
