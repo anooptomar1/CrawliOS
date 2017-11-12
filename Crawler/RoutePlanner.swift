@@ -54,7 +54,6 @@ class RoutePlanner {
         ]
         
         // TODO: take into account steps, to make the pub crawl more accurate
-        
         let parameters:[String : Any] = [:]
         let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
         let request = NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ&origin=\(start.coordinate.latitude),\(start.coordinate.longitude)&destination=\(end.coordinate.latitude),\(end.coordinate.longitude)&mode=walking&units=imperial")! as URL,
@@ -92,16 +91,11 @@ class RoutePlanner {
         var flattenedRouteChunks = routeChunks.reduce([], +)
         
         // Set how many points we have
-        pointsFound = flattenedRouteChunks.count
+        pointsFound = flattenedRouteChunks.count - 1
     
         // Get the pubs at each point
-        for i in 0..<flattenedRouteChunks.count {
-            if i == 0 {
-                getPubsPoint(loc: flattenedRouteChunks[i], prevLoc: nil, callback: callback)
-            } else {
+        for i in 1..<flattenedRouteChunks.count {
                 getPubsPoint(loc: flattenedRouteChunks[i], prevLoc: flattenedRouteChunks[i - 1], callback: callback)
-            }
-            
         }
         
     }
@@ -132,7 +126,7 @@ class RoutePlanner {
 //        return stepSegs
 //    }
     
-    private class func getPubsPoint(loc:CLLocation, prevLoc:CLLocation?, callback:@escaping (_ pubs: [PubObject]) -> Void) {
+    private class func getPubsPoint(loc:CLLocation, prevLoc:CLLocation, callback:@escaping (_ pubs: [PubObject]) -> Void) {
         
         let headers = [
             "content-type": "application/json"
@@ -162,6 +156,8 @@ class RoutePlanner {
                 pointsProcessed += 1
                 processBatchCount += 1
                 
+                print ("Points processed: \( pointsProcessed ) Points Found: \( pointsFound )")
+                
                 // If we have found all the pubs, filter the list and perform some ordering
                 if (pointsFound == pointsProcessed) {
                     print ("Terminated")
@@ -175,12 +171,18 @@ class RoutePlanner {
     }
     
     // Adds the pub to the list
-    private class func processPub(data: JSON, currLoc: CLLocation, prevLoc: CLLocation?, batchNo: Int) {
+    private class func processPub(data: JSON, currLoc: CLLocation, prevLoc: CLLocation, batchNo: Int) {
         
         // Create a new pub object
         let pubLoc = CLLocation(latitude: data["geometry"]["location"]["lat"].double!, longitude: data["geometry"]["location"]["lng"].double!)
-        let distanceFromCurrent = distanceBetweenLocs(loc1: pubLoc, loc2: currLoc)
-        let pub = PubObject(id: 0, gmaps_id: data["id"].string!, name: data["name"].string!, location: pubLoc, photo_ref: data["photos"][0]["photo_reference"].string, rating: data["rating"].double, distance: distanceFromCurrent)
+        
+        // co-ordinates of start and end point of line
+        // co-ordinates of current point
+        
+        let distance = distanceFromLine(startPoint:prevLoc, endPoint: currLoc, pub: pubLoc)
+        let pub = PubObject(id: 0, gmaps_id: data["id"].string!, name: data["name"].string!, location: pubLoc, photo_ref: data["photos"][0]["photo_reference"].string, rating: data["rating"].double, distance: distance)
+        
+        print("found pub \(pub.name!)")
         
         // Recording the lowest distance for each pub
         
@@ -189,7 +191,6 @@ class RoutePlanner {
             // If the distance we have before is greater than ours
             if distance > pub.distance! {
                 // Remove the current value from the list
-                // MARK: - add to list
                 closestDistances[pub.name!] = pub.distance!
             }
         } else {
@@ -199,16 +200,17 @@ class RoutePlanner {
         
         
         // If closest to the last point we found, don't add it
-        pub.distance = distanceFromCurrent
-        if let somePrevLoc = prevLoc {
-            // If the distance is shorter than the previous one, add it
-            // (Later, when traversing the list, just take the second one)
-            if distanceBetweenLocs(loc1: pubLoc, loc2: somePrevLoc) > distanceFromCurrent {
-                batches[batchNo]!.append(pub)
-            }
-        } else {
-            batches[batchNo]!.append(pub)
-        }
+        pub.distance = distance
+        // If the distance is shorter than the previous one, add it
+        // (Later, when traversing the list, just take the second one)
+        batches[batchNo]!.append(pub)
+        
+    }
+    
+    // Distance from line
+    private class func distanceFromLine(startPoint:CLLocation, endPoint: CLLocation, pub: CLLocation) -> Double {
+        
+        return abs((endPoint.coordinate.longitude - startPoint.coordinate.longitude) * pub.coordinate.latitude - ((endPoint.coordinate.latitude) - (startPoint.coordinate.latitude)) * pub.coordinate.longitude + (endPoint.coordinate.latitude) * (startPoint.coordinate.longitude) - endPoint.coordinate.longitude * startPoint.coordinate.latitude) / sqrt(pow(endPoint.coordinate.longitude - startPoint.coordinate.longitude, 2) + pow(endPoint.coordinate.latitude - startPoint.coordinate.latitude, 2))
         
     }
     
@@ -258,6 +260,8 @@ class RoutePlanner {
         for i in 0..<sortedByOriginalOrderPubs.count {
             sortedByOriginalOrderPubs[i].id = i
         }
+        
+        print (closestDistances)
         
         return sortedByDistancePubsList
     }
