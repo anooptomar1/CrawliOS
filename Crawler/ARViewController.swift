@@ -9,8 +9,12 @@
 import UIKit
 import ARKit
 import SceneKit
+import CoreLocation
 
 class ARViewController: UIViewController, ARSCNViewDelegate {
+    
+    
+    let locationManager = CLLocationManager()
     
     @IBOutlet var sceneView: ARSCNView!
     
@@ -18,6 +22,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     var configuration = ARWorldTrackingConfiguration()  //ARWorldTrackingSessionConfiguration()
     
     var planeNode: SCNNode!
+    
+    var heading: Double = 0
     
 //    var planeIdentifiers = [UUID]()
     var anchors = [ARAnchor]()
@@ -33,6 +39,18 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.distanceFilter = 50
+        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
+        if CLLocationManager.headingAvailable() {
+            locationManager.headingFilter = 3
+            locationManager.startUpdatingHeading()
+        } else {
+            print("PANIC!!")
+        }
         
         // Set the view's delegate
         sceneView.delegate = self
@@ -92,21 +110,28 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             node = SCNNode()
             //            let planeGeometry = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
             let planeGeometry = SCNBox(width: CGFloat(planeAnchor.extent.x), height: planeHeight, length: CGFloat(planeAnchor.extent.z), chamferRadius: 0.0)
-            planeGeometry.firstMaterial?.diffuse.contents = UIColor.green
-            planeGeometry.firstMaterial?.specular.contents = UIColor.white
+            planeGeometry.firstMaterial?.diffuse.contents = UIColor(red: 200, green: 200, blue: 200, alpha: 0.5)
+            planeGeometry.firstMaterial?.specular.contents = UIColor(red: 200, green: 200, blue: 200, alpha: 0.5)
             let planeNode = SCNNode(geometry: planeGeometry)
             planeNode.position = SCNVector3Make(planeAnchor.center.x, Float(planeHeight / 2), planeAnchor.center.z)
             //            since SCNPlane is vertical, needs to be rotated -90 degress on X axis to make a plane
             //            planeNode.transform = SCNMatr
+            planeNode.opacity = 0.5
             node?.addChildNode(planeNode)
             
-            let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 0.1, height: 0.3))
-            let shape = SCNShape(path: path, extrusionDepth: 0.01)
+            let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 0.05, height: 0.01))
+            let shape = SCNShape(path: path, extrusionDepth: 0.7)
             shape.firstMaterial?.diffuse.contents = UIColor.blue
             shape.firstMaterial?.specular.contents = UIColor.white
             
+            
+//            if arrowNode != nil {
+//                arrowNode.removeFromParentNode()
+//                arrowNode = nil
+//            }
+            
             arrowNode = SCNNode(geometry: shape)
-            arrowNode.transform = SCNMatrix4MakeRotation(Float(-CGFloat.pi/2), 1, 0, 0)
+//            arrowNode.transform = SCNMatrix4MakeRotation(Float(-CGFloat.pi/2), 1, 0, 0)
             
             arrowNode.transform = SCNMatrix4Translate(arrowNode.transform, 0, 0.01, 0)
             
@@ -125,9 +150,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     // Called when a new node has been mapped to the given anchor
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         planeNodesCount += 1
-        if node.childNodes.count > 0 && planeNodesCount % 2 == 0 {
-            node.childNodes[0].geometry?.firstMaterial?.diffuse.contents = UIColor.yellow
-        }
+        
     }
     
     // Called when a node has been updated with data from the given anchor
@@ -178,8 +201,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         switch camera.trackingState {
-        case .normal:
-            print("Done")
+        case .normal:break
         case .notAvailable: break
         case .limited(let reason):
             switch reason {
@@ -193,6 +215,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+        let bearing = bearingFrom(lat1: ourLat, lng1: ourLong, lat2: otherLat, lng2: otherLong)
+        
+        let correctedBearing = (bearing - degreesToRads(deg: heading)) * -1
+        
         if arrowNode == nil || sceneView == nil {
             return
         }
@@ -200,17 +227,29 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let dx = arrowNode.worldPosition.x - sceneView.pointOfView!.worldPosition.x
         let dz = arrowNode.worldPosition.z - sceneView.pointOfView!.worldPosition.z
         
-        print(dx)
-        print(dz)
+//        print(dx)
+//        print(dz)
         
         
         arrowNode.setWorldTransform(SCNMatrix4Translate(arrowNode.worldTransform, -dx, 0, -dz))
         
-        let dTheta = arrowNode.worldOrientation.y - 0
-        print(dTheta)
+//        let dTheta = arrowNode.worldOrientation.y - Float(correctedBearing + sceneView.pointOfView!.eulerAngles.y)
         
-        arrowNode.orientation = SCNQuaternion(arrowNode.orientation.x, arrowNode.orientation.y - dTheta, arrowNode.orientation.z, arrowNode.orientation.w)
+        print(sceneView.pointOfView!.eulerAngles.y )
+        print(correctedBearing)
+        print(degreesToRads(deg: heading) )
+        print("----------")
+        
+        arrowNode.eulerAngles.y = sceneView.pointOfView!.eulerAngles.y + Float(correctedBearing)
         
         
     }
+}
+
+extension ARViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        heading = newHeading.magneticHeading
+    }
+    
 }
