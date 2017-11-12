@@ -41,7 +41,10 @@ class CrawlDetailViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    @IBAction func goButtonPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "presentARScene", sender: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
