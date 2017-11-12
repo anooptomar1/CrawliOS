@@ -168,7 +168,7 @@ class CreateCrawlViewController: UIViewController {
     }
     
     @IBAction func goButtonPressed(_ sender: Any) {
-        RoutePlanner.getRouteBetweenStartEnd(start: CLLocation(latitude: startLoc.latitude, longitude: startLoc.longitude ), end:CLLocation(latitude: destinationLoc.latitude, longitude: destinationLoc.longitude ), maxPubs: pubCount) { (pubs) in
+        SimpleRoutePlanner.getRoute(start: CLLocation(latitude: startLoc.latitude, longitude: startLoc.longitude ), end:CLLocation(latitude: destinationLoc.latitude, longitude: destinationLoc.longitude ), maxPubs: pubCount) { (pubs) in
             
             self.requestNameFromAlert(pubs: pubs)
         }

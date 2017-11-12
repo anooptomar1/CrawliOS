@@ -169,6 +169,8 @@ extension CrawlsViewController: UITableViewDelegate, UITableViewDataSource {
         
         for pub in allPubs {
             
+            print("I AM PRINTING")
+            
             print(pub.id)
                 
                 let loc = CLLocationCoordinate2D(latitude: pub.lat, longitude: pub.long)

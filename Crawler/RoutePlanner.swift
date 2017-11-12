@@ -71,7 +71,7 @@ class RoutePlanner {
         // TODO: take into account steps, to make the pub crawl more accurate
         let parameters:[String : Any] = [:]
         let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
-        let request = NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ&origin=\(start.coordinate.latitude),\(start.coordinate.longitude)&destination=\(end.coordinate.latitude),\(end.coordinate.longitude)&mode=walking&units=imperial")! as URL,
+        let request = NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ&origin=\(start.coordinate.latitude),\(start.coordinate.longitude)&destination=\(end.coordinate.latitude),\(end.coordinate.longitude)&mode=walking&units=metric")! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 30.0)
         request.httpMethod = "POST"
@@ -94,23 +94,20 @@ class RoutePlanner {
     // Splits all the line segments up into chunks of half a mile
     private class func splitStepsUp(data:JSON, callback:@escaping (_ pubs: [PubObject]) -> Void) {
         
-        var routeChunks:[[CLLocation]] = []
+        var routeChunks:[CLLocation] = []
         
         for leg in data["routes"][0]["legs"].array! {
             for step in leg["steps"].array! {
-                routeChunks.append([CLLocation(latitude: step["start_location"]["lat"].double!, longitude: step["start_location"]["lng"].double!)])
+                routeChunks.append(CLLocation(latitude: step["start_location"]["lat"].double!, longitude: step["start_location"]["lng"].double!))
             }
         }
         
-        // Reduce the array of arrays
-        var flattenedRouteChunks = routeChunks.reduce([], +)
-        
         // Set how many points we have
-        pointsFound = flattenedRouteChunks.count - 1
+        pointsFound = routeChunks.count - 1
     
         // Get the pubs at each point
-        for i in 1..<flattenedRouteChunks.count {
-                getPubsPoint(loc: flattenedRouteChunks[i], prevLoc: flattenedRouteChunks[i - 1], callback: callback)
+        for i in 1..<routeChunks.count {
+            getPubsPoint(loc: routeChunks[i], prevLoc: routeChunks[i - 1], callback: callback)
         }
         
     }
@@ -149,7 +146,7 @@ class RoutePlanner {
         
         let parameters:[String : Any] = [:]
         let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
-        let requestString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAlecdJCO2kjIg48qjXL0NZ4SOztf1idLs&type=bar&location=\(loc.coordinate.latitude),\(loc.coordinate.longitude)&radius=804.672"
+        let requestString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAlecdJCO2kjIg48qjXL0NZ4SOztf1idLs&type=bar&location=\(loc.coordinate.latitude),\(loc.coordinate.longitude)&radius=100&units=metric"
         let request = NSMutableURLRequest(url: NSURL(string: requestString)! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 30.0)
@@ -169,6 +166,7 @@ class RoutePlanner {
                     processPub(data: pub, currLoc: loc, prevLoc: prevLoc, batchNo: processBatchCount)
                 }
                 pointsProcessed += 1
+                print (processBatchCount)
                 processBatchCount += 1
                 
                 print ("Points processed: \( pointsProcessed ) Points Found: \( pointsFound )")
@@ -213,9 +211,6 @@ class RoutePlanner {
             closestDistances[pub.name!] = pub.distance!
         }
         
-        
-        // If closest to the last point we found, don't add it
-        pub.distance = distance
         // If the distance is shorter than the previous one, add it
         // (Later, when traversing the list, just take the second one)
         batches[batchNo]!.append(pub)
@@ -233,6 +228,8 @@ class RoutePlanner {
         
         // x = lat
         // y = lng
+        
+        
         
         let n = endPoint - startPoint
         let pa = startPoint - pub
@@ -259,23 +256,26 @@ class RoutePlanner {
         var flattenedPubsList = pubsList.reduce([], +)
         
         // Add the indexes
+        print ("FLATTENED PUB LIST")
         for i in 0..<flattenedPubsList.count {
             flattenedPubsList[i].id = i
+            print(flattenedPubsList[i].name!)
+            print(flattenedPubsList[i].id!)
         }
         
-        // Sort the array based on an object
+        // Sort the array based on the distance
         var sortedFlattenedPubsList = flattenedPubsList.sorted(by: { $0.distance < $1.distance })
         
         // Sort by the distance, take the amount the user wanted
         var sortedByDistancePubsList:[PubObject] = []
         for i in 0..<userMaxPubs {
-            if i < flattenedPubsList.count {
+            if i < sortedFlattenedPubsList.count {
                 sortedByDistancePubsList.append(sortedFlattenedPubsList[i])
             }
         }
         
         // Sort by the original order
-        var sortedByOriginalOrderPubs = flattenedPubsList.sorted(by: { $0.id < $1.id })
+        var sortedByOriginalOrderPubs = sortedByDistancePubsList.sorted(by: { $0.id < $1.id })
         
         // Re-write the indicies
         for i in 0..<sortedByOriginalOrderPubs.count {
@@ -284,21 +284,16 @@ class RoutePlanner {
         
         print (closestDistances)
         
-        return sortedByDistancePubsList
+        return sortedByOriginalOrderPubs
     }
     
     // Takes a list of pubs, cycles through them
     private class func removeDuplicatePubs(pubs:[PubObject]) -> [PubObject] {
     
         var result:[PubObject] = []
-        var lastPubSeen:String = ""
-        for i in 0..<pubs.count {
-            let pub:PubObject = pubs[i]
-            if pub.name! != lastPubSeen {
-                if closestDistances[pub.name!] == pub.distance! {
-                    result.append(pub)
-                }
-                lastPubSeen = pub.name!
+        for pub in pubs {
+            if closestDistances[pub.name!] == pub.distance! {
+                result.append(pub)
             }
         }
         

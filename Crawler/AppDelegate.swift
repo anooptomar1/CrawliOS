@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")
         GMSPlacesClient.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")
         
-        RoutePlanner.getRouteBetweenStartEnd(start: CLLocation(latitude: 51.485411, longitude: -0.214231), end: CLLocation(latitude: 51.488157, longitude: -0.219357), maxPubs: 30) { (pubs) in
+        RoutePlanner.getRouteBetweenStartEnd(start: CLLocation(latitude: 46.519749, longitude: 6.634693), end: CLLocation(latitude: 46.519844, longitude: 6.638703), maxPubs: 15) { (pubs) in
             print(pubs.map({ (pub) -> String in
                 return pub.name
             }))
