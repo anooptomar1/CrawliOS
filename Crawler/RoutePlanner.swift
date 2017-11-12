@@ -43,6 +43,8 @@ class RoutePlanner {
             "content-type": "application/json"
         ]
         
+        // TODO: take into account steps, to make the pub crawl more accurate
+        
         let parameters:[String : Any] = [:]
         let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
         let request = NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ&origin=\(start.coordinate.latitude),\(start.coordinate.longitude)&destination=\(end.coordinate.latitude),\(end.coordinate.longitude)&mode=walking&units=imperial")! as URL,
@@ -59,9 +61,7 @@ class RoutePlanner {
                 print(error!.localizedDescription)
             } else {
                 let json = try! JSON(data: data!)
-                DispatchQueue.main.async {
-                    splitStepsUp(data: json, callback: callback)
-                }
+                splitStepsUp(data: json, callback: callback)
             }
         }).resume()
         
@@ -73,11 +73,16 @@ class RoutePlanner {
         var routeChunks:[[CLLocation]] = []
         
         for leg in data["routes"][0]["legs"].array! {
-            routeChunks.append(splitSingleStepUp(data: leg))
+            for step in leg["steps"].array! {
+                routeChunks.append([CLLocation(latitude: step["start_location"]["lat"].double!, longitude: step["start_location"]["lng"].double!)])
+            }
         }
         
         // Reduce the array of arrays
         var flattenedRouteChunks = routeChunks.reduce([], +)
+        
+        // Set how many points we have
+        pointsFound = flattenedRouteChunks.count
     
         // Get the pubs at each point
         for i in 0..<flattenedRouteChunks.count {
@@ -92,30 +97,30 @@ class RoutePlanner {
     }
     
     // Takes a single step and splits it into chunks of a half a mile
-    private class func splitSingleStepUp(data: JSON) -> [CLLocation] {
-        
-        // Get the distance that this segment takes up
-        let metersInHalfAMile = 804.672
-        
-        // Calculate how many chunks we need to generate
-        let chunksNeeded = metersInHalfAMile/data["distance"]["value"].double!
-        
-        // Calculate the ratio of the changes in latitude and longtidude
-        let dLat = (data["end_location"]["lat"].double! - data["start_location"]["lat"].double!)
-        let dLng = (data["end_location"]["lng"].double! - data["start_location"]["lng"].double!)
-        let magnitude = sqrt(pow(dLat, 2) + pow(dLng, 2))
-        let nLat = dLat / magnitude
-        let nLng = dLng / magnitude
-        
-        var stepSegs:[CLLocation] = []
-        stepSegs.append(CLLocation(latitude: data["end_location"]["lat"].double!, longitude: data["start_location"]["lat"].double!))
-        
-        for _ in 0..<Int(chunksNeeded) {
-            stepSegs.append(CLLocation(latitude: data["end_location"]["lat"].double! * nLat, longitude: data["end_location"]["lng"].double! * nLng))
-        }
-        
-        return stepSegs
-    }
+//    private class func splitSingleStepUp(data: JSON) -> [CLLocation] {
+//
+//        // Get the distance that this segment takes up
+//        let metersInHalfAMile = 804.672
+//
+//        // Calculate how many chunks we need to generate
+//        let chunksNeeded = metersInHalfAMile/data["distance"]["value"].double!
+//
+//        // Calculate the ratio of the changes in latitude and longtidude
+//        let dLat = (data["end_location"]["lat"].double! - data["start_location"]["lat"].double!)
+//        let dLng = (data["end_location"]["lng"].double! - data["start_location"]["lng"].double!)
+//        let magnitude = sqrt(pow(dLat, 2) + pow(dLng, 2))
+//        let nLat = dLat / magnitude
+//        let nLng = dLng / magnitude
+//
+//        var stepSegs:[CLLocation] = []
+//        stepSegs.append(CLLocation(latitude: data["end_location"]["lat"].double!, longitude: data["start_location"]["lat"].double!))
+//
+//        for _ in 0..<Int(chunksNeeded) {
+//            stepSegs.append(CLLocation(latitude: data["end_location"]["lat"].double! * nLat, longitude: data["end_location"]["lng"].double! * nLng))
+//        }
+//
+//        return stepSegs
+//    }
     
     private class func getPubsPoint(loc:CLLocation, prevLoc:CLLocation?, callback:@escaping (_ pubs: [PubObject]) -> Void) {
         
@@ -125,13 +130,14 @@ class RoutePlanner {
         
         let parameters:[String : Any] = [:]
         let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
-        let request = NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAlecdJCO2kjIg48qjXL0NZ4SOztf1idLs&type=bar&location=\(loc.coordinate.latitude),\(loc.coordinate.longitude)&radius=804.672")! as URL,
+        let requestString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAlecdJCO2kjIg48qjXL0NZ4SOztf1idLs&type=bar&location=\(loc.coordinate.latitude),\(loc.coordinate.longitude)&radius=804.672"
+        let request = NSMutableURLRequest(url: NSURL(string: requestString)! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 30.0)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.httpBody = postData as Data
-        
+                
         let session = URLSession.shared
         session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
@@ -139,19 +145,19 @@ class RoutePlanner {
                 print(error!.localizedDescription)
             } else {
                 let json = try! JSON(data: data!)
-                // THIS WILL MESS UP THE ORDERING
-                DispatchQueue.main.async {
-                    batches[processBatchCount] = []
-                    for pub in json["results"].array! {
-                        processPub(data: pub, currLoc: loc, prevLoc: prevLoc, batchNo: processBatchCount)
-                    }
-                    pointsProcessed += 1
+                batches[processBatchCount] = []
+                for pub in json["results"].array! {
+                    processPub(data: pub, currLoc: loc, prevLoc: prevLoc, batchNo: processBatchCount)
                 }
+                pointsProcessed += 1
                 processBatchCount += 1
                 
                 // If we have found all the pubs, filter the list and perform some ordering
                 if (pointsFound == pointsProcessed) {
-                    callback(cleanPubList())
+                    print ("Terminated")
+                    DispatchQueue.main.async {
+                        callback(cleanPubList())
+                    }
                 }
             }
         }).resume()
@@ -164,7 +170,7 @@ class RoutePlanner {
         // Create a new pub object
         let pubLoc = CLLocation(latitude: data["geometry"]["location"]["lat"].double!, longitude: data["geometry"]["location"]["lng"].double!)
         let distanceFromCurrent = distanceBetweenLocs(loc1: pubLoc, loc2: currLoc)
-        let pub = PubObject(id: 0, gmaps_id: data["id"].string!, name: data["name"].string!, location: pubLoc, photo_ref: data["photos"]["photo_reference"].string!, rating: data["rating"].double, distance: distanceFromCurrent)
+        let pub = PubObject(id: 0, gmaps_id: data["id"].string!, name: data["name"].string!, location: pubLoc, photo_ref: data["photos"][0]["photo_reference"].string, rating: data["rating"].double, distance: distanceFromCurrent)
         
         // If closest to the last point we found, don't add it
         pub.distance = distanceFromCurrent
