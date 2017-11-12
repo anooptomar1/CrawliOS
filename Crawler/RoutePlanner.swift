@@ -37,6 +37,14 @@ class RoutePlanner {
     // Gets the route between the start and end, in steps
     public class func getRouteBetweenStartEnd(start:CLLocation, end:CLLocation, maxPubs: Int, callback:@escaping (_ pubs: [PubObject]) -> Void) {
         
+        // Initialise stuff
+        pubs = []
+        batches = [:]
+        userMaxPubs = 0
+        processBatchCount = 0
+        pointsProcessed = 0
+        pointsFound = 0
+        
         userMaxPubs = maxPubs
         
         let headers = [
