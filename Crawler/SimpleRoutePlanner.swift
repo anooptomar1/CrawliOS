@@ -25,6 +25,9 @@ class SimpleRoutePlanner {
     
     public class func getRoute(start:CLLocation, end:CLLocation, maxPubs: Int, callback:@escaping (_ pubs: [PubObject]) -> Void) {
         self.end = end
+        self.pubsFound = []
+        self.pubsId = 0
+        self.visitedPubs = [:]
     
         // Get pubs with half a mile
         
