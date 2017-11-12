@@ -36,9 +36,6 @@
 		04ECAD9A1FB79EAD0039001F /* CreateCrawlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD991FB79EAD0039001F /* CreateCrawlViewController.swift */; };
 		04ECAD9C1FB7A4210039001F /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD9B1FB7A4210039001F /* UITextFieldExtensions.swift */; };
 		BE322D6E6968577E5D9DFD00 /* Pods_CrawlerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DCCB18C5C16E0E24E2C37B /* Pods_CrawlerTests.framework */; };
-		D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */; };
-		D035FFE61FB7640A00E32E0D /* PubObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE51FB7640A00E32E0D /* PubObject.swift */; };
-		D035FFE81FB7740900E32E0D /* RoutePlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE71FB7740900E32E0D /* RoutePlanner.swift */; };
 		D035FFE21FB752FB00E32E0D /* GoogleMapsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */; };
 		D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */; };
 		D035FFE61FB7640A00E32E0D /* PubObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE51FB7640A00E32E0D /* PubObject.swift */; };
@@ -93,9 +90,6 @@
 		100AA317B41709C19911058B /* Pods_Crawler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crawler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		268616F817DEF5DDD7C77931 /* Pods-Crawler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.release.xcconfig"; sourceTree = "<group>"; };
 		AF81287C547C7B24C229EF9B /* Pods-Crawler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.debug.xcconfig"; sourceTree = "<group>"; };
-		D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		D035FFE51FB7640A00E32E0D /* PubObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubObject.swift; sourceTree = "<group>"; };
-		D035FFE71FB7740900E32E0D /* RoutePlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlanner.swift; sourceTree = "<group>"; };
 		D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsWrapper.swift; sourceTree = "<group>"; };
 		D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		D035FFE51FB7640A00E32E0D /* PubObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubObject.swift; sourceTree = "<group>"; };
@@ -164,16 +158,12 @@
 				D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */,
 				D035FFE51FB7640A00E32E0D /* PubObject.swift */,
 				D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */,
-				D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */,
-				D035FFE51FB7640A00E32E0D /* PubObject.swift */,
 				049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */,
 				04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */,
 				04ECAD991FB79EAD0039001F /* CreateCrawlViewController.swift */,
 				046CD89C1FB7AC1300F8B5B7 /* LocationPickerViewController.swift */,
 				046CD89E1FB7CC7300F8B5B7 /* CrawlDetailViewController.swift */,
 				046CD8A01FB7D29D00F8B5B7 /* CrawlDetailTableViewCell.swift */,
-				D035FFE71FB7740900E32E0D /* RoutePlanner.swift */,
-				D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */,
 				D035FFE71FB7740900E32E0D /* RoutePlanner.swift */,
 				04ECAD871FB752230039001F /* Polyline.swift */,
 				049DA5791FB72BC9005FD8EA /* Main.storyboard */,
@@ -416,7 +406,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C0A7CEF4AE826A00142A9CC4 /* [CP] Check Pods Manifest.lock */ = {
@@ -434,7 +424,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C97DD1C045C187B8E9720402 /* [CP] Copy Pods Resources */ = {
@@ -467,11 +457,8 @@
 				046CD8A11FB7D29D00F8B5B7 /* CrawlDetailTableViewCell.swift in Sources */,
 				D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */,
 				D035FFE61FB7640A00E32E0D /* PubObject.swift in Sources */,
-				D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */,
-				D035FFE61FB7640A00E32E0D /* PubObject.swift in Sources */,
 				0418C0861FB742CA00221DE2 /* Pub+CoreDataClass.swift in Sources */,
 				04ECAD9A1FB79EAD0039001F /* CreateCrawlViewController.swift in Sources */,
-				D035FFE21FB752FB00E32E0D /* GoogleMapsWrapper.swift in Sources */,
 				D035FFE21FB752FB00E32E0D /* GoogleMapsWrapper.swift in Sources */,
 				0418C0891FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift in Sources */,
 				049DA5761FB72BC9005FD8EA /* AppDelegate.swift in Sources */,
