@@ -9,6 +9,21 @@
 import Foundation
 import CoreLocation
 
+
+extension CLLocation {
+    static func - (left: CLLocation, right: CLLocation) -> CLLocation {
+        return CLLocation(latitude: left.coordinate.latitude - right.coordinate.latitude, longitude: left.coordinate.longitude - right.coordinate.longitude)
+    }
+    
+    static func * (left: CLLocation, right: Double) -> CLLocation {
+        return CLLocation(latitude: left.coordinate.latitude * right, longitude: left.coordinate.longitude * right)
+    }
+    
+    func dotProduct(with: CLLocation) -> Double {
+        return self.coordinate.latitude * with.coordinate.latitude + self.coordinate.longitude * with.coordinate.longitude
+    }
+}
+
 class RoutePlanner {
     
     // Track how many points we are looking up pubs for
@@ -210,17 +225,23 @@ class RoutePlanner {
     // Distance from line
     private class func distanceFromLine(startPoint:CLLocation, endPoint: CLLocation, pub: CLLocation) -> Double {
         
-        return abs((endPoint.coordinate.longitude - startPoint.coordinate.longitude) * pub.coordinate.latitude - ((endPoint.coordinate.latitude) - (startPoint.coordinate.latitude)) * pub.coordinate.longitude + (endPoint.coordinate.latitude) * (startPoint.coordinate.longitude) - endPoint.coordinate.longitude * startPoint.coordinate.latitude) / sqrt(pow(endPoint.coordinate.longitude - startPoint.coordinate.longitude, 2) + pow(endPoint.coordinate.latitude - startPoint.coordinate.latitude, 2))
+//        return abs((endPoint.coordinate.longitude - startPoint.coordinate.longitude) * pub.coordinate.latitude - ((endPoint.coordinate.latitude) - (startPoint.coordinate.latitude)) * pub.coordinate.longitude + (endPoint.coordinate.latitude) * (startPoint.coordinate.longitude) - endPoint.coordinate.longitude * startPoint.coordinate.latitude) / sqrt(pow(endPoint.coordinate.longitude - startPoint.coordinate.longitude, 2) + pow(endPoint.coordinate.latitude - startPoint.coordinate.latitude, 2))
         
-    }
-    
-    // Calculates distance between two co-ordinates
-    private class func distanceBetweenLocs(loc1:CLLocation, loc2:CLLocation) -> Double {
+        // a = start
+        // b = end
+        // p = pub
         
-        let dLat = (loc2.coordinate.latitude - loc1.coordinate.latitude)
-        let dLng = (loc2.coordinate.longitude - loc2.coordinate.longitude)
-        return sqrt(pow(dLat, 2) + pow(dLng, 2))
+        // x = lat
+        // y = lng
         
+        let n = endPoint - startPoint
+        let pa = startPoint - pub
+        let c = n * ((n.dotProduct(with: pa) / (n.dotProduct(with: n))))
+        
+        let d = pa - c
+        let d2 = d.dotProduct(with: d)
+        
+        return d2
     }
     
     // Sorts all the pubs by the batchNo
@@ -266,13 +287,13 @@ class RoutePlanner {
         return sortedByDistancePubsList
     }
     
-    // Takes a list of pubs, cycles backwards and takes the second one if duplicates exist
+    // Takes a list of pubs, cycles through them
     private class func removeDuplicatePubs(pubs:[PubObject]) -> [PubObject] {
     
         var result:[PubObject] = []
         var lastPubSeen:String = ""
         for i in 0..<pubs.count {
-            let pub:PubObject = pubs[pubs.count - i - 1]
+            let pub:PubObject = pubs[i]
             if pub.name! != lastPubSeen {
                 if closestDistances[pub.name!] == pub.distance! {
                     result.append(pub)
