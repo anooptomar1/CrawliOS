@@ -7,15 +7,243 @@
 //
 
 import Foundation
+import CoreLocation
 
 class RoutePlanner {
+    
+    // Track how many points we are looking up pubs for
+    static var pointsFound = 0
+    static var pointsProcessed = 0
+    static var processBatchCount = 0
+    static var userMaxPubs = 0
+    static var pubs:[PubObject] = []
+    static var batches:[Int:[PubObject]] = [:]
+    
+    //https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ&origin=51.485411,-0.214231&destination=51.488990,-0.217742&mode=walking
+
+    
+    // Radius of each circle: half a mile
+    // Step along the path in half a mile increments
     
     // We get a start and an end
     // We get the route between them from google
     // Which will be a polyline
-    // Which we will then construct a LongLang
+    // We then step along the path in increments
+    // For each point along the path
+    // Get all the pubs in a radius
+    // Determine the rating, and the distance from the pub
+    // Add them to a queue of pubObjects
     
-    // We choose the pubs at each waypoint
-    // Then w
+    // Gets the route between the start and end, in steps
+    public class func getRouteBetweenStartEnd(start:CLLocation, end:CLLocation, maxPubs: Int, callback:@escaping (_ pubs: [PubObject]) -> Void) {
+        
+        userMaxPubs = maxPubs
+        
+        let headers = [
+            "content-type": "application/json"
+        ]
+        
+        let parameters:[String : Any] = [:]
+        let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
+        let request = NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ&origin=\(start.coordinate.latitude),\(start.coordinate.longitude)&destination=\(end.coordinate.latitude),\(end.coordinate.longitude)&mode=walking&units=imperial")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 30.0)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.httpBody = postData as Data
+        
+        let session = URLSession.shared
+        session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print("HTTP FAIL")
+                print(error!.localizedDescription)
+            } else {
+                let json = try! JSON(data: data!)
+                DispatchQueue.main.async {
+                    splitStepsUp(data: json, callback: callback)
+                }
+            }
+        }).resume()
+        
+    }
+    
+    // Splits all the line segments up into chunks of half a mile
+    private class func splitStepsUp(data:JSON, callback:@escaping (_ pubs: [PubObject]) -> Void) {
+        
+        var routeChunks:[[CLLocation]] = []
+        
+        for leg in data["routes"][0]["legs"].array! {
+            routeChunks.append(splitSingleStepUp(data: leg))
+        }
+        
+        // Reduce the array of arrays
+        var flattenedRouteChunks = routeChunks.reduce([], +)
+    
+        // Get the pubs at each point
+        for i in 0..<flattenedRouteChunks.count {
+            if i == 0 {
+                getPubsPoint(loc: flattenedRouteChunks[i], prevLoc: nil, callback: callback)
+            } else {
+                getPubsPoint(loc: flattenedRouteChunks[i], prevLoc: flattenedRouteChunks[i - 1], callback: callback)
+            }
+            
+        }
+        
+    }
+    
+    // Takes a single step and splits it into chunks of a half a mile
+    private class func splitSingleStepUp(data: JSON) -> [CLLocation] {
+        
+        // Get the distance that this segment takes up
+        let metersInHalfAMile = 804.672
+        
+        // Calculate how many chunks we need to generate
+        let chunksNeeded = metersInHalfAMile/data["distance"]["value"].double!
+        
+        // Calculate the ratio of the changes in latitude and longtidude
+        let dLat = (data["end_location"]["lat"].double! - data["start_location"]["lat"].double!)
+        let dLng = (data["end_location"]["lng"].double! - data["start_location"]["lng"].double!)
+        let magnitude = sqrt(pow(dLat, 2) + pow(dLng, 2))
+        let nLat = dLat / magnitude
+        let nLng = dLng / magnitude
+        
+        var stepSegs:[CLLocation] = []
+        stepSegs.append(CLLocation(latitude: data["end_location"]["lat"].double!, longitude: data["start_location"]["lat"].double!))
+        
+        for _ in 0..<Int(chunksNeeded) {
+            stepSegs.append(CLLocation(latitude: data["end_location"]["lat"].double! * nLat, longitude: data["end_location"]["lng"].double! * nLng))
+        }
+        
+        return stepSegs
+    }
+    
+    private class func getPubsPoint(loc:CLLocation, prevLoc:CLLocation?, callback:@escaping (_ pubs: [PubObject]) -> Void) {
+        
+        let headers = [
+            "content-type": "application/json"
+        ]
+        
+        let parameters:[String : Any] = [:]
+        let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
+        let request = NSMutableURLRequest(url: NSURL(string: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAlecdJCO2kjIg48qjXL0NZ4SOztf1idLs&type=bar&location=\(loc.coordinate.latitude),\(loc.coordinate.longitude)&radius=804.672")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 30.0)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.httpBody = postData as Data
+        
+        let session = URLSession.shared
+        session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print("HTTP FAIL")
+                print(error!.localizedDescription)
+            } else {
+                let json = try! JSON(data: data!)
+                // THIS WILL MESS UP THE ORDERING
+                DispatchQueue.main.async {
+                    batches[processBatchCount] = []
+                    for pub in json["results"].array! {
+                        processPub(data: pub, currLoc: loc, prevLoc: prevLoc, batchNo: processBatchCount)
+                    }
+                    pointsProcessed += 1
+                }
+                processBatchCount += 1
+                
+                // If we have found all the pubs, filter the list and perform some ordering
+                if (pointsFound == pointsProcessed) {
+                    callback(cleanPubList())
+                }
+            }
+        }).resume()
+
+    }
+    
+    // Adds the pub to the list
+    private class func processPub(data: JSON, currLoc: CLLocation, prevLoc: CLLocation?, batchNo: Int) {
+        
+        // Create a new pub object
+        let pubLoc = CLLocation(latitude: data["geometry"]["location"]["lat"].double!, longitude: data["geometry"]["location"]["lng"].double!)
+        let distanceFromCurrent = distanceBetweenLocs(loc1: pubLoc, loc2: currLoc)
+        let pub = PubObject(id: 0, gmaps_id: data["id"].string!, name: data["name"].string!, location: pubLoc, photo_ref: data["photos"]["photo_reference"].string!, rating: data["rating"].double, distance: distanceFromCurrent)
+        
+        // If closest to the last point we found, don't add it
+        pub.distance = distanceFromCurrent
+        if let somePrevLoc = prevLoc {
+            // If the distance is shorter than the previous one, add it
+            // (Later, when traversing the list, just take the second one)
+            if distanceBetweenLocs(loc1: pubLoc, loc2: somePrevLoc) > distanceFromCurrent {
+                batches[batchNo]!.append(pub)
+            }
+        } else {
+            batches[batchNo]!.append(pub)
+        }
+        
+    }
+    
+    // Calculates distance between two co-ordinates
+    private class func distanceBetweenLocs(loc1:CLLocation, loc2:CLLocation) -> Double {
+        
+        let dLat = (loc2.coordinate.latitude - loc1.coordinate.latitude)
+        let dLng = (loc2.coordinate.longitude - loc2.coordinate.longitude)
+        return sqrt(pow(dLat, 2) + pow(dLng, 2))
+        
+    }
+    
+    // Sorts all the pubs by the batchNo
+    // Removes the second
+    private class func cleanPubList() -> [PubObject] {
+    
+        var pubsList:[[PubObject]] = []
+        
+        // Add the batches, in order, to the list
+        for i in 0..<processBatchCount {
+            pubsList.append(removeDuplicatePubs(pubs: batches[i]!))
+        }
+        
+        // Flatten the list
+        var flattenedPubsList = pubsList.reduce([], +)
+        
+        // Add the indexes
+        for i in 0..<flattenedPubsList.count {
+            flattenedPubsList[i].id = i
+        }
+        
+        // Sort the array based on an object
+        var sortedFlattenedPubsList = flattenedPubsList.sorted(by: { $0.distance < $1.distance })
+        
+        // Sort by the distance, take the lowest 5
+        var sortedByDistancePubsList:[PubObject] = []
+        for i in 0..<userMaxPubs {
+            if i < flattenedPubsList.count {
+                sortedByDistancePubsList.append(sortedFlattenedPubsList[i])
+            }
+        }
+        
+        // Sort by the original order
+        var sortedByOriginalOrderPubs = flattenedPubsList.sorted(by: { $0.id < $1.id })
+        
+        // Re-write the indicies
+        for i in 0..<sortedByOriginalOrderPubs.count {
+            sortedByOriginalOrderPubs[i].id = i
+        }
+        
+        return sortedByOriginalOrderPubs
+    }
+    
+    // Takes a list of pubs, cycles backwards and takes the second one if duplicates exist
+    private class func removeDuplicatePubs(pubs:[PubObject]) -> [PubObject] {
+    
+        var result:[PubObject] = []
+        var lastPubSeen:String = ""
+        for i in 0..<pubs.count {
+            let pub:PubObject = pubs[pubs.count - i - 1]
+            if pub.name! != lastPubSeen {
+                result.append(pub)
+                lastPubSeen = pub.name!
+            }
+        }
+        
+        return result
+    }
     
 }

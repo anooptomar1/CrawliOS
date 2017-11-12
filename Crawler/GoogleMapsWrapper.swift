@@ -14,8 +14,6 @@ class GoogleMapsWrapper {
     // Queries the Maps API for pubs near me
     public class func GetPubs(myLocation: CLLocation, maxCount: Int, callback:@escaping (_ pubs: [PubObject]) -> Void) {
         
-        print("IN FUNC")
-        
         let headers = [
             "content-type": "application/json"
         ]
@@ -53,7 +51,6 @@ class GoogleMapsWrapper {
                 DispatchQueue.main.async {
                     callback(results)
                 }
-                
                 
             }
         }).resume()
