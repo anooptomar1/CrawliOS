@@ -47,6 +47,8 @@ class LocationPickerViewController: UIViewController {
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

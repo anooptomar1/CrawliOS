@@ -8,6 +8,11 @@
 
 import Foundation
 
+let otherLat = 46.519581
+let otherLong = 6.561847
+
+let ourLat = 46.518591
+let ourLong = 6.562105
 
 public func distFrom(lat1: Double, lng1: Double, lat2: Double, lng2: Double) -> Double {
     
@@ -19,6 +24,16 @@ public func distFrom(lat1: Double, lng1: Double, lat2: Double, lng2: Double) -> 
     let dist = earthRadius * c
     
     return dist
+    
+}
+
+public func bearingFrom(lat1: Double, lng1: Double, lat2: Double, lng2: Double) -> Double {
+    
+    let y = sin(lng2 - lng1) * cos(lat2)
+    let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(lng2 - lng1)
+    let bearing = atan2(y, x)
+    
+    return bearing
     
 }
 
