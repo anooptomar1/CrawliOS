@@ -50,6 +50,8 @@
 	<string>We need this to get you home safe!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need this to get you home safe!</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need this for high tech guidance</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
