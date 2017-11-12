@@ -135,6 +135,7 @@
                     </view>
                     <connections>
                         <outlet property="headerView" destination="Xmk-lp-KHM" id="0q4-HN-0TP"/>
+                        <outlet property="tableView" destination="Y3Y-hk-XcP" id="BhO-Nf-myi"/>
                         <segue destination="Kof-Tz-H5g" kind="presentation" identifier="presentCreateForm" id="Qum-Im-eF9"/>
                         <segue destination="BHo-xl-8EG" kind="presentation" identifier="presentCrawlDetails" id="luv-gX-d2c"/>
                     </connections>
@@ -319,6 +320,7 @@
                         <outlet property="startLocButton" destination="L2c-RZ-cUz" id="YVG-Cx-aFx"/>
                         <outlet property="startLocationButtonLabel" destination="yuo-FG-fEQ" id="bcV-Rw-K86"/>
                         <segue destination="CIr-4i-zm4" kind="presentation" identifier="presentLocationPicker" id="Ho3-hA-Jfb"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="presentMenu" id="K77-lg-jNe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dgI-yG-8El" sceneMemberID="firstResponder"/>

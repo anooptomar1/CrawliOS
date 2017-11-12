@@ -208,7 +208,13 @@ class CreateCrawlViewController: UIViewController {
                         
                     }
                     
-                    try! moc.save()
+                    
+                    DispatchQueue.main.async {
+                        
+                        try! moc.save()
+                        self.performSegue(withIdentifier: "presentMenu", sender: nil)
+                    }
+                    
                     
                 }
             }))
