@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 class CreateCrawlViewController: UIViewController {
     
@@ -163,6 +164,60 @@ class CreateCrawlViewController: UIViewController {
         UIView.animate(withDuration: 0.5) {
             self.goButton.backgroundColor = UIColor.colorWithHsb(323, s: 72, b: 44)
             self.goButtonStretcher.backgroundColor = UIColor.colorWithHsb(323, s: 72, b: 44)
+        }
+    }
+    
+    @IBAction func goButtonPressed(_ sender: Any) {
+        RoutePlanner.getRouteBetweenStartEnd(start: CLLocation(latitude: startLoc.latitude, longitude: startLoc.longitude ), end:CLLocation(latitude: destinationLoc.latitude, longitude: destinationLoc.longitude ), maxPubs: pubCount) { (pubs) in
+            
+            self.requestNameFromAlert(pubs: pubs)
+        }
+    }
+    
+    func requestNameFromAlert(pubs: [PubObject]) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Create this Crawl", message: "Enter a name for this crawl and it will then be saved", preferredStyle: .alert)
+            alert.addTextField(configurationHandler: { (tf) in
+                tf.autocapitalizationType = .words
+            })
+            
+            alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) in
+                let tf = alert.textFields![0]
+                if tf.text == nil || tf.text! == "" {
+                    self.requestNameFromAlert(pubs: pubs)
+                } else {
+                    
+                    let crawl = NSEntityDescription.insertNewObject(forEntityName: "SavedCrawl", into: moc) as! SavedCrawl
+                    crawl.name = tf.text!
+                    crawl.startLat = self.startLoc.latitude
+                    crawl.startLong = self.startLoc.longitude
+                    crawl.endLat = self.destinationLoc.latitude
+                    crawl.endLong = self.destinationLoc.longitude
+                    
+                    for pub in pubs {
+                        
+                        let pubObj = NSEntityDescription.insertNewObject(forEntityName: "Pub", into: moc) as! Pub
+                        pubObj.id = Int64(pub.id)
+                        pubObj.name = pub.name
+                        pubObj.lat = pub.location.coordinate.latitude
+                        pubObj.long = pub.location.coordinate.longitude
+                        pubObj.rating = pub.rating == nil ? -1 : pub.rating!
+                        pubObj.crawl = crawl
+                        
+                        crawl.addToPubs(pubObj)
+                        
+                    }
+                    
+                    try! moc.save()
+                    
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

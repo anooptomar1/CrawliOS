@@ -12,7 +12,6 @@ class CrawlDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet var starImages: [UIImageView]!
-    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
     @IBOutlet weak var cellView: UIView!
