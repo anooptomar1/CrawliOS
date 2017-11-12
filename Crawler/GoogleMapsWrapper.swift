@@ -47,7 +47,6 @@ class GoogleMapsWrapper {
                 var results:[PubObject] = []
                 for result in json["results"].array! {
                     
-                    print(result)
                     let location = CLLocation(latitude: result["geometry"]["location"]["lat"].double!, longitude: result["geometry"]["location"]["lng"].double!)
                     results.append(PubObject(id:result["id"].string!, name:result["name"].string!, location:location, rating:result["rating"].double))
                 }

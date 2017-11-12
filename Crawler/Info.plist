@@ -46,6 +46,10 @@
 	</array>
 	<key>CFBundleDisplayName</key>
 	<string>Crawl</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need this to get you home safe!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need this to get you home safe!</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

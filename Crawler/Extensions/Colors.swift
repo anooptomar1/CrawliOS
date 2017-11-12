@@ -22,15 +22,7 @@ extension UIColor {
         return UIColor(hue: CGFloat(h)/359, saturation: CGFloat(s)/100, brightness: CGFloat(b)/100, alpha: a)
     }
     
-    class var musicPinkColor: UIColor {
-        return UIColor.colorWithHsb(340, s: 73, b: 93)
-    }
-    
-    class var musicFadedPinkColor: UIColor {
-        return UIColor.colorWithHsb(340, s: 73, b: 93, a: 0.25)
-    }
-    
-    class var blueBlackgroundPlaceholderTextColor: UIColor {
-        return UIColor.colorWithHsb(0, s: 0, b: 100, a: 0.50)
-    }
 }
+
+let shadowColor = UIColor.colorWithHsb(0, s: 0, b: 39, a: 0.5)
+let shadowColorLight = UIColor.colorWithHsb(0, s: 0, b: 39, a: 0.3)
