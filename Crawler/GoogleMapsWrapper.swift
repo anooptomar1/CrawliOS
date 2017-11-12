@@ -14,6 +14,8 @@ class GoogleMapsWrapper {
     // Queries the Maps API for pubs near me
     public class func GetPubs(myLocation: CLLocation, maxCount: Int, callback:@escaping (_ pubs: [PubObject]) -> Void) {
         
+        print("IN FUNC")
+        
         let headers = [
             "content-type": "application/json"
         ]
@@ -44,13 +46,13 @@ class GoogleMapsWrapper {
                 // Strip out the relavant bits
                 var results:[PubObject] = []
                 for result in json["results"].array! {
-                    
-                    let location = CLLocation(latitude: result["geometry"]["location"]["lat"].double!, longitude: result["geometry"]["location"]["lng"].double!)
-                    results.append(PubObject(id:result["id"].string!, name:result["name"].string!, location:location, rating:result["rating"].double))
+                    let location = CLLocation(latitude: result["location"]["lat"].double!, longitude: result["latitude"]["lng"].double!)
+                    results.append(PubObject(id:result["id"].string!, name:result["name"].string!, location:location, rating:result["rating"].double!))
                 }
                 DispatchQueue.main.async {
                     callback(results)
                 }
+                
                 
             }
         }).resume()

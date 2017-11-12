@@ -29,9 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")
         GMSPlacesClient.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")
         
-        GoogleMapsWrapper.GetPubs(myLocation: CLLocation(latitude: 51.5033640, longitude: -0.1276250), maxCount: 20) { (pubs) in
-            // DO CALCULATING ROUTE SHIT
-            
+        RoutePlanner.getRouteBetweenStartEnd(start: CLLocation(latitude: 51.485411, longitude: -0.214231), end: CLLocation(latitude: 51.488157, longitude: -0.219357), maxPubs: 30) { (pubs) in
+            print(pubs.map({ (pub) -> String in
+                return pub.name
+            }))
         }
         
         // Override point for customization after application launch.
