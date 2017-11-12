@@ -18,6 +18,7 @@ class CrawlsViewController: UIViewController, NSFetchedResultsControllerDelegate
         
     }
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerView: UIView!
     
     var crawlForPassing: SavedCrawl!
@@ -34,7 +35,14 @@ class CrawlsViewController: UIViewController, NSFetchedResultsControllerDelegate
         headerView.layer.shadowRadius = 10
         headerView.layer.shadowOpacity = 1
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
         try! crawlFetchedResultsController.performFetch()
+        tableView.reloadData()
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {
@@ -229,7 +237,7 @@ extension CrawlsViewController: UITableViewDelegate, UITableViewDataSource {
             marker.map = mapView
         }
         
-//        cell.mapHolder.isUserInteractionEnabled = false
+        cell.mapHolder.isUserInteractionEnabled = false
         
         cell.mapHolder.addSubview(mapView)
         
