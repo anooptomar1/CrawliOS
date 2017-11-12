@@ -11,6 +11,10 @@
 		0418C0871FB742CA00221DE2 /* Pub+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C0831FB742CA00221DE2 /* Pub+CoreDataProperties.swift */; };
 		0418C0881FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C0841FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift */; };
 		0418C0891FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418C0851FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift */; };
+		046CD89D1FB7AC1300F8B5B7 /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046CD89C1FB7AC1300F8B5B7 /* LocationPickerViewController.swift */; };
+		046CD89F1FB7CC7300F8B5B7 /* CrawlDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046CD89E1FB7CC7300F8B5B7 /* CrawlDetailViewController.swift */; };
+		046CD8A11FB7D29D00F8B5B7 /* CrawlDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046CD8A01FB7D29D00F8B5B7 /* CrawlDetailTableViewCell.swift */; };
+		046CD8A31FB7D9A100F8B5B7 /* PageSlideAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046CD8A21FB7D9A100F8B5B7 /* PageSlideAnimator.swift */; };
 		049DA5761FB72BC9005FD8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049DA5751FB72BC9005FD8EA /* AppDelegate.swift */; };
 		049DA5781FB72BC9005FD8EA /* CrawlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */; };
 		049DA57B1FB72BC9005FD8EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 049DA5791FB72BC9005FD8EA /* Main.storyboard */; };
@@ -28,6 +32,9 @@
 		04ECAD8F1FB753DC0039001F /* Heebo-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 049DA59F1FB7390E005FD8EA /* Heebo-Light.ttf */; };
 		04ECAD911FB755600039001F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD901FB755600039001F /* Colors.swift */; };
 		04ECAD941FB75DDD0039001F /* CrawlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */; };
+		04ECAD981FB791060039001F /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD971FB791060039001F /* Math.swift */; };
+		04ECAD9A1FB79EAD0039001F /* CreateCrawlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD991FB79EAD0039001F /* CreateCrawlViewController.swift */; };
+		04ECAD9C1FB7A4210039001F /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ECAD9B1FB7A4210039001F /* UITextFieldExtensions.swift */; };
 		BE322D6E6968577E5D9DFD00 /* Pods_CrawlerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DCCB18C5C16E0E24E2C37B /* Pods_CrawlerTests.framework */; };
 		D035FFE21FB752FB00E32E0D /* GoogleMapsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */; };
 		D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */; };
@@ -52,6 +59,10 @@
 		0418C0831FB742CA00221DE2 /* Pub+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pub+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0418C0841FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedCrawl+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0418C0851FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedCrawl+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		046CD89C1FB7AC1300F8B5B7 /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
+		046CD89E1FB7CC7300F8B5B7 /* CrawlDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlDetailViewController.swift; sourceTree = "<group>"; };
+		046CD8A01FB7D29D00F8B5B7 /* CrawlDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlDetailTableViewCell.swift; sourceTree = "<group>"; };
+		046CD8A21FB7D9A100F8B5B7 /* PageSlideAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageSlideAnimator.swift; sourceTree = "<group>"; };
 		049DA5721FB72BC9005FD8EA /* Crawler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crawler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049DA5751FB72BC9005FD8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlsViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +84,9 @@
 		04ECAD871FB752230039001F /* Polyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
 		04ECAD901FB755600039001F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlTableViewCell.swift; sourceTree = "<group>"; };
+		04ECAD971FB791060039001F /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		04ECAD991FB79EAD0039001F /* CreateCrawlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCrawlViewController.swift; sourceTree = "<group>"; };
+		04ECAD9B1FB7A4210039001F /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 		100AA317B41709C19911058B /* Pods_Crawler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crawler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		268616F817DEF5DDD7C77931 /* Pods-Crawler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.release.xcconfig"; sourceTree = "<group>"; };
 		AF81287C547C7B24C229EF9B /* Pods-Crawler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crawler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crawler/Pods-Crawler.debug.xcconfig"; sourceTree = "<group>"; };
@@ -143,10 +157,14 @@
 				049DA5751FB72BC9005FD8EA /* AppDelegate.swift */,
 				D035FFE31FB75B2800E32E0D /* SwiftyJSON.swift */,
 				D035FFE51FB7640A00E32E0D /* PubObject.swift */,
-				049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */,
 				D035FFE11FB752FB00E32E0D /* GoogleMapsWrapper.swift */,
-				D035FFE71FB7740900E32E0D /* RoutePlanner.swift */,
+				049DA5771FB72BC9005FD8EA /* CrawlsViewController.swift */,
 				04ECAD931FB75DDD0039001F /* CrawlTableViewCell.swift */,
+				04ECAD991FB79EAD0039001F /* CreateCrawlViewController.swift */,
+				046CD89C1FB7AC1300F8B5B7 /* LocationPickerViewController.swift */,
+				046CD89E1FB7CC7300F8B5B7 /* CrawlDetailViewController.swift */,
+				046CD8A01FB7D29D00F8B5B7 /* CrawlDetailTableViewCell.swift */,
+				D035FFE71FB7740900E32E0D /* RoutePlanner.swift */,
 				04ECAD871FB752230039001F /* Polyline.swift */,
 				049DA5791FB72BC9005FD8EA /* Main.storyboard */,
 				049DA5981FB7390E005FD8EA /* Heebo */,
@@ -185,6 +203,9 @@
 			isa = PBXGroup;
 			children = (
 				04ECAD901FB755600039001F /* Colors.swift */,
+				04ECAD971FB791060039001F /* Math.swift */,
+				04ECAD9B1FB7A4210039001F /* UITextFieldExtensions.swift */,
+				046CD8A21FB7D9A100F8B5B7 /* PageSlideAnimator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -385,7 +406,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C0A7CEF4AE826A00142A9CC4 /* [CP] Check Pods Manifest.lock */ = {
@@ -403,7 +424,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C97DD1C045C187B8E9720402 /* [CP] Copy Pods Resources */ = {
@@ -429,19 +450,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				0418C0871FB742CA00221DE2 /* Pub+CoreDataProperties.swift in Sources */,
+				046CD8A31FB7D9A100F8B5B7 /* PageSlideAnimator.swift in Sources */,
+				046CD89D1FB7AC1300F8B5B7 /* LocationPickerViewController.swift in Sources */,
 				04ECAD911FB755600039001F /* Colors.swift in Sources */,
 				049DA5781FB72BC9005FD8EA /* CrawlsViewController.swift in Sources */,
+				046CD8A11FB7D29D00F8B5B7 /* CrawlDetailTableViewCell.swift in Sources */,
 				D035FFE41FB75B2800E32E0D /* SwiftyJSON.swift in Sources */,
 				D035FFE61FB7640A00E32E0D /* PubObject.swift in Sources */,
 				0418C0861FB742CA00221DE2 /* Pub+CoreDataClass.swift in Sources */,
+				04ECAD9A1FB79EAD0039001F /* CreateCrawlViewController.swift in Sources */,
 				D035FFE21FB752FB00E32E0D /* GoogleMapsWrapper.swift in Sources */,
 				0418C0891FB742CA00221DE2 /* SavedCrawl+CoreDataProperties.swift in Sources */,
 				049DA5761FB72BC9005FD8EA /* AppDelegate.swift in Sources */,
 				04ECAD881FB752230039001F /* Polyline.swift in Sources */,
+				046CD89F1FB7CC7300F8B5B7 /* CrawlDetailViewController.swift in Sources */,
 				049DA57E1FB72BC9005FD8EA /* Crawler.xcdatamodeld in Sources */,
 				D035FFE81FB7740900E32E0D /* RoutePlanner.swift in Sources */,
 				0418C0881FB742CA00221DE2 /* SavedCrawl+CoreDataClass.swift in Sources */,
 				04ECAD941FB75DDD0039001F /* CrawlTableViewCell.swift in Sources */,
+				04ECAD9C1FB7A4210039001F /* UITextFieldExtensions.swift in Sources */,
+				04ECAD981FB791060039001F /* Math.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

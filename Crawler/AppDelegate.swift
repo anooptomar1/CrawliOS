@@ -9,6 +9,11 @@
 import UIKit
 import CoreData
 import GoogleMaps
+import GooglePlaces
+
+
+let pageAnimator = PageSlideAnimator(direction: .Right)
+let pageDismisser = PageSlideAnimator(direction: .Left)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dest = self.window!.rootViewController as! CrawlsViewController
         dest.managedObjectContext = self.managedObjectContext
         
-        GMSServices.provideAPIKey("AIzaSyAlecdJCO2kjIg48qjXL0NZ4SOztf1idLs")
+        GMSServices.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")
+        GMSPlacesClient.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")
         
         GoogleMapsWrapper.GetPubs(myLocation: CLLocation(latitude: 51.5033640, longitude: -0.1276250), maxCount: 20) { (pubs) in
             // DO CALCULATING ROUTE SHIT

@@ -1,20 +1,21 @@
 //
-//  CrawlTableViewCell.swift
+//  CrawlDetailTableViewCell.swift
 //  Crawler
 //
-//  Created by Jack Chorley on 11/11/2017.
+//  Created by Jack Chorley on 12/11/2017.
 //  Copyright © 2017 Jack Chorley. All rights reserved.
 //
 
 import UIKit
 
-class CrawlTableViewCell: UITableViewCell {
-    
-    
-    @IBOutlet weak var cellView: UIView!
-    @IBOutlet weak var mapHolder: UIView!
+class CrawlDetailTableViewCell: UITableViewCell {
+
     @IBOutlet weak var nameLabel: UILabel!
-    
+    @IBOutlet var starImages: [UIImageView]!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    @IBOutlet weak var cellView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
