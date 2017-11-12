@@ -15,6 +15,8 @@ import GooglePlaces
 let pageAnimator = PageSlideAnimator(direction: .Right)
 let pageDismisser = PageSlideAnimator(direction: .Left)
 
+var moc: NSManagedObjectContext!
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,8 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let dest = self.window!.rootViewController as! CrawlsViewController
-        dest.managedObjectContext = self.managedObjectContext
+        moc = self.managedObjectContext
         
         GMSServices.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")
         GMSPlacesClient.provideAPIKey("AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ")

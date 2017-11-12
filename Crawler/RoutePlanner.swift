@@ -18,6 +18,7 @@ class RoutePlanner {
     static var userMaxPubs = 0
     static var pubs:[PubObject] = []
     static var batches:[Int:[PubObject]] = [:]
+    static var closestDistances:[String:Double] = [:]
     
     //https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCOYcJeQG_IG2HXw4BRehrnr2QPOCQYSzQ&origin=51.485411,-0.214231&destination=51.488990,-0.217742&mode=walking
 
@@ -36,6 +37,15 @@ class RoutePlanner {
     
     // Gets the route between the start and end, in steps
     public class func getRouteBetweenStartEnd(start:CLLocation, end:CLLocation, maxPubs: Int, callback:@escaping (_ pubs: [PubObject]) -> Void) {
+        
+        // Initialise stuff
+        pubs = []
+        batches = [:]
+        closestDistances = [:]
+        userMaxPubs = 0
+        processBatchCount = 0
+        pointsProcessed = 0
+        pointsFound = 0
         
         userMaxPubs = maxPubs
         
@@ -172,6 +182,22 @@ class RoutePlanner {
         let distanceFromCurrent = distanceBetweenLocs(loc1: pubLoc, loc2: currLoc)
         let pub = PubObject(id: 0, gmaps_id: data["id"].string!, name: data["name"].string!, location: pubLoc, photo_ref: data["photos"][0]["photo_reference"].string, rating: data["rating"].double, distance: distanceFromCurrent)
         
+        // Recording the lowest distance for each pub
+        
+        // If we have already found this pub, check the distance
+        if let distance = closestDistances[pub.name!] {
+            // If the distance we have before is greater than ours
+            if distance > pub.distance! {
+                // Remove the current value from the list
+                // MARK: - add to list
+                closestDistances[pub.name!] = pub.distance!
+            }
+        } else {
+            // Not found yet, so add to list
+            closestDistances[pub.name!] = pub.distance!
+        }
+        
+        
         // If closest to the last point we found, don't add it
         pub.distance = distanceFromCurrent
         if let somePrevLoc = prevLoc {
@@ -217,7 +243,7 @@ class RoutePlanner {
         // Sort the array based on an object
         var sortedFlattenedPubsList = flattenedPubsList.sorted(by: { $0.distance < $1.distance })
         
-        // Sort by the distance, take the lowest 5
+        // Sort by the distance, take the amount the user wanted
         var sortedByDistancePubsList:[PubObject] = []
         for i in 0..<userMaxPubs {
             if i < flattenedPubsList.count {
@@ -233,7 +259,7 @@ class RoutePlanner {
             sortedByOriginalOrderPubs[i].id = i
         }
         
-        return sortedByOriginalOrderPubs
+        return sortedByDistancePubsList
     }
     
     // Takes a list of pubs, cycles backwards and takes the second one if duplicates exist
@@ -244,7 +270,9 @@ class RoutePlanner {
         for i in 0..<pubs.count {
             let pub:PubObject = pubs[pubs.count - i - 1]
             if pub.name! != lastPubSeen {
-                result.append(pub)
+                if closestDistances[pub.name!] == pub.distance! {
+                    result.append(pub)
+                }
                 lastPubSeen = pub.name!
             }
         }
