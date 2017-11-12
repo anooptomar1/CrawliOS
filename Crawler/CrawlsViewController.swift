@@ -20,32 +20,11 @@ class CrawlsViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     @IBOutlet weak var headerView: UIView!
     
-    var managedObjectContext: NSManagedObjectContext!
-    
     var crawlForPassing: SavedCrawl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        //        let crawl = NSEntityDescription.insertNewObject(forEntityName: "SavedCrawl", into: managedObjectContext) as! SavedCrawl
-        //        crawl.name = "Pub far away"
-        //        crawl.startLat = 51.485411
-        //        crawl.startLong = -0.214231
-        //        crawl.endLat = 51.487986
-        //        crawl.endLong = -0.219377
-        //
-        //        let pub = NSEntityDescription.insertNewObject(forEntityName: "Pub", into: managedObjectContext) as! Pub
-        //        pub.id = 0
-        //        pub.name = "The Not Pear Tree"
-        //        pub.lat = 51.486860
-        //        pub.long = -0.225000
-        //        pub.rating = 1.2
-        //        pub.crawl = crawl
-        //
-        //        crawl.addToPubs(pub)
-        //
-        //        try! managedObjectContext.save()
         
         
         headerView.layer.shadowPath = CGPath(roundedRect: headerView.bounds, cornerWidth: 0, cornerHeight: 0, transform: nil)
@@ -89,7 +68,7 @@ class CrawlsViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         let aFetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
-            managedObjectContext: self.managedObjectContext,
+            managedObjectContext: moc,
             sectionNameKeyPath: nil,
             cacheName: nil)
         

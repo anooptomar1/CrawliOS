@@ -60,12 +60,12 @@ extension CrawlDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return crawl.pubs!.count + 1
+        return crawl.pubs!.count + 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row == 0 {
+        if indexPath.row == 0 || indexPath.row == crawl.pubs!.count + 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "spacerCell", for: indexPath)
             return cell
         }
@@ -124,7 +124,7 @@ extension CrawlDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if indexPath.row == 0 {
+        if indexPath.row == 0 || indexPath.row == crawl.pubs!.count + 1 {
             return 42
         }
         
